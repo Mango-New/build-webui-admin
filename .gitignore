@@ -1,5 +1,6 @@
 # ignore keys
-*/id_rsa
+/**/id_rsa
+/**/id_rsa.pub
 
 # ignore shared configuration
-*/database.yml
+/**/database.yml
