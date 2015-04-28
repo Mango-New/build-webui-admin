@@ -1,0 +1,37 @@
+---
+- hosts: all
+
+  vars:
+    project_name: "webui-admin"
+    project_root: "/opt/{{ project_name }}"
+    project_shared_path: "{{ project_root }}/shared"
+    project_source_path: "/opt/build/{{ project_name }}"
+    project_deploy_strategy: "git"
+    project_git_repo: "git@github.com:Mango-New/webui-admin.git"
+    project_version: "develop"
+    project_unwanted_items: [".git"]
+    project_shared_children:
+      - path: /log
+        src: log
+      - path: /tmp
+        src: log
+      - path: /config/database.yml
+        src: /config/database.yml
+        type: file
+    project_post_build_commands:
+      - rbenv exec bundle
+    project_finalize: true
+    utilities_extras:
+      - vim
+
+  pre_tasks:
+    - name: ssh | copy private key
+      copy: src=files/keys/ dest=/root/.ssh/ mode=0600
+    - name: deploy | create directories
+      file: "path={{ project_shared_path }}/config state=directory"
+    - name: deploy | copy shared configuration file
+      copy: "src=files/config/database.yml dest={{ project_shared_path }}/config/database.yml"
+
+  roles:
+    - role: f500.project_deploy
+    - role: ANXS.utilities

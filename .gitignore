@@ -1,0 +1,5 @@
+# ignore keys
+*/id_rsa
+
+# ignore shared configuration
+*/database.yml
