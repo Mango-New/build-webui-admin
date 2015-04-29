@@ -18,6 +18,9 @@
       - path: /config/database.yml
         src: /config/database.yml
         type: file
+      - path: /config/secrets.yml
+        src: /config/secrets.yml
+        type: file
     project_post_build_commands:
       - rbenv exec bundle
     project_finalize: true
@@ -31,6 +34,8 @@
       file: "path={{ project_shared_path }}/config state=directory"
     - name: deploy | copy shared configuration file
       copy: "src=files/config/database.yml dest={{ project_shared_path }}/config/database.yml"
+    - name: deploy | copy shared configuration file
+      copy: "src=files/config/secrets.yml dest={{ project_shared_path }}/config/secrets.yml"
 
   roles:
     - role: f500.project_deploy
