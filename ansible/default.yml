@@ -39,4 +39,3 @@
 
   roles:
     - role: f500.project_deploy
-    - role: ANXS.utilities
